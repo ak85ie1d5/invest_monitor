@@ -1,2 +1,3 @@
 .spyproject
-!database/*
+database/*
+__pycache__
