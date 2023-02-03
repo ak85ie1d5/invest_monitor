@@ -19,8 +19,6 @@ class Status(models.Model):
 class Underlying(models.Model):
     name = models.CharField(max_length=(30))
     rtl_quote_url = models.URLField()
-    objectif = models.FloatField()
-    stop = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -32,6 +30,8 @@ class Product(models.Model):
     direction = models.ForeignKey(Direction, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     underlying = models.ForeignKey(Underlying, on_delete=models.CASCADE)
+    objectif = models.FloatField()
+    stop = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
