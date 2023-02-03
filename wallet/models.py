@@ -3,6 +3,7 @@ from django.db import models
 class Direction(models.Model):
     label = models.CharField(max_length=10)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return self.label
@@ -10,6 +11,7 @@ class Direction(models.Model):
 class Status(models.Model):
     label = models.CharField(max_length=10)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return self.label
@@ -19,11 +21,14 @@ class Product(models.Model):
     recommandation = models.URLField()
     unit_cost = models.FloatField()
     quantity = models.IntegerField(default=0)
-    created_at = models.DateTimeField('date published')
+    direction = models.ForeignKey(Direction, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class Underlying(models.Model):
     name = models.CharField(max_length=(30))
     rtl_quote_url = models.URLField()
     objectif = models.FloatField()
     stop = models.FloatField()
-    created_at = models.DateTimeField('date published')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
