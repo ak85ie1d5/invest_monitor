@@ -16,16 +16,6 @@ class Status(models.Model):
     def __str__(self):
         return self.label
 
-class Product(models.Model):
-    rtl_quote_url = models.URLField()
-    recommandation = models.URLField()
-    unit_cost = models.FloatField()
-    quantity = models.IntegerField(default=0)
-    direction = models.ForeignKey(Direction, on_delete=models.CASCADE)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
 class Underlying(models.Model):
     name = models.CharField(max_length=(30))
     rtl_quote_url = models.URLField()
@@ -33,3 +23,15 @@ class Underlying(models.Model):
     stop = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+class Product(models.Model):
+    rtl_quote_url = models.URLField()
+    recommandation = models.URLField()
+    unit_cost = models.FloatField()
+    quantity = models.IntegerField(default=0)
+    direction = models.ForeignKey(Direction, on_delete=models.CASCADE)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE)
+    underlying = models.ForeignKey(Underlying, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
