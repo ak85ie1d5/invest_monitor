@@ -77,7 +77,7 @@ WSGI_APPLICATION = "invest_monitor.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "invest_monitor_db.sqlite3",
+        "NAME": BASE_DIR / "database/invest_monitor_db.sqlite3",
     }
 }
 
