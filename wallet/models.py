@@ -22,7 +22,11 @@ class Underlying(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    def __str__(self):
+        return self.name
+    
 class Product(models.Model):
+    name = models.CharField(max_length=20)
     rtl_quote_url = models.URLField()
     recommandation = models.URLField()
     unit_cost = models.FloatField()
