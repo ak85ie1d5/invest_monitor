@@ -22,6 +22,7 @@ class Product(models.Model):
     unit_cost = models.FloatField()
     quantity = models.IntegerField(default=0)
     direction = models.ForeignKey(Direction, on_delete=models.CASCADE)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
