@@ -27,11 +27,11 @@ class Product(models.Model):
     recommandation = models.URLField()
     unit_cost = models.FloatField()
     quantity = models.IntegerField(default=0)
+    objectif = models.FloatField(default=0)
+    stop = models.FloatField(default=0)
     direction = models.ForeignKey(Direction, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     underlying = models.ForeignKey(Underlying, on_delete=models.CASCADE)
-    objectif = models.FloatField()
-    stop = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
