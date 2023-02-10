@@ -1,0 +1,9 @@
+{% if product_list %}
+    <ul>
+    {% for product in product_list %}
+        <li>{{ product.name }}
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucun produit trouvé !</p>
+{% endif %}
