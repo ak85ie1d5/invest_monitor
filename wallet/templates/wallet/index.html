@@ -1,9 +1,36 @@
-{% if product_list %}
-    <ul>
-    {% for product in product_list %}
-        <li>{{ product.name }}
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Aucun produit trouvé !</p>
-{% endif %}
+<table>
+    <thead>
+        <tr>
+            <th>Status</th>
+            <th>Direction</ht>
+            <th>Product name</th>
+            <th>Unit cost</th>
+            <th>Quantity</th>
+            <th>Objectif</th>
+            <th>Stop</th>
+            <th>Underlying</th>
+            <th>Recomendation</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if product_list %}
+            {% for product in product_list %}
+                <tr>
+                    <td>{{ product.status }}</td>
+                    <td>{{ product.direction }}</td>
+                    <td><a href="{{ product.rtl_quote_url }}" title="{{ product.name }}" target="_blank">{{ product.name }}</a></td>
+                    <td>{{ product.unit_cost }} €</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>{{ product.objectif }} €</td>
+                    <td>{{ product.stop }} €</td>
+                    <td><a href="" title="{{ product.underlying }}" taget="_blank">{{ product.underlying }}</a></td>
+                    <td><a href="{{ product.recommandation }}" title="{{ product.recommandation }}" target="_blank">Lien</a></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td>Aucun produit trouvé !</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
