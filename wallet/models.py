@@ -17,10 +17,16 @@ class Status(models.Model):
         return self.label
 
 class Underlying(models.Model):
-    name = models.CharField(max_length=(30))
+    name = models.CharField(max_length=30)
     rtl_quote_url = models.URLField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.name
+
+class Currency(models.Model):
+    name = models.CharField(max_length=3)
     
     def __str__(self):
         return self.name
@@ -30,6 +36,7 @@ class Product(models.Model):
     rtl_quote_url = models.URLField()
     recommandation = models.URLField()
     unit_cost = models.FloatField()
+    currency = models.ForeignKey(Currency, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
     objectif = models.FloatField(default=0)
     stop = models.FloatField(default=0)
@@ -41,4 +48,3 @@ class Product(models.Model):
     
     def __str__(self):
         return self.name
-

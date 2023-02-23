@@ -19,10 +19,10 @@
                     <td>{{ product.status }}</td>
                     <td>{{ product.direction }}</td>
                     <td><a href="{{ product.rtl_quote_url }}" title="{{ product.name }}" target="_blank">{{ product.name }}</a></td>
-                    <td>{{ product.unit_cost }} €</td>
+                    <td>{{ product.unit_cost }} {{ product.currency }}</td>
                     <td>{{ product.quantity }}</td>
-                    <td>{{ product.objectif }} €</td>
-                    <td>{{ product.stop }} €</td>
+                    <td>{{ product.objectif }} {{ product.currency }}</td>
+                    <td>{{ product.stop }} {{ product.currency }}</td>
                     <td><a href="" title="{{ product.underlying }}" taget="_blank">{{ product.underlying }}</a></td>
                     <td><a href="{{ product.recommandation }}" title="{{ product.recommandation }}" target="_blank">Lien</a></td>
                 </tr>
