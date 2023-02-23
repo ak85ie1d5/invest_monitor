@@ -1,0 +1,31 @@
+table, th, td {
+  border-top: 1px solid #9bc2e6;
+  border-bottom: 1px solid #9bc2e6;
+  border-collapse: collapse;
+}
+
+th, td {
+    padding: 5px 12px;
+}
+
+table {
+    margin: 0 auto;
+    border: 1px solid #9bc2e6;
+}
+
+th {
+    background: #5b9bd5;
+    color: #FFF
+}
+
+tr:nth-child(odd) {
+    background: #ddebf7;
+}
+
+a {
+    color: #000;
+}
+
+.text-center {
+    text-align: center;
+}

@@ -1,36 +1,49 @@
-<table>
-    <thead>
-        <tr>
-            <th>Status</th>
-            <th>Direction</ht>
-            <th>Product name</th>
-            <th>Unit cost</th>
-            <th>Quantity</th>
-            <th>Objectif</th>
-            <th>Stop</th>
-            <th>Underlying</th>
-            <th>Recomendation</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% if product_list %}
-            {% for product in product_list %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Invest Monitor</title>
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'wallet/style.css' %}">
+</head>
+<body>
+    <div class="im-container">
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ product.status }}</td>
-                    <td>{{ product.direction }}</td>
-                    <td><a href="{{ product.rtl_quote_url }}" title="{{ product.name }}" target="_blank">{{ product.name }}</a></td>
-                    <td>{{ product.unit_cost }} {{ product.currency }}</td>
-                    <td>{{ product.quantity }}</td>
-                    <td>{{ product.objectif }} {{ product.currency }}</td>
-                    <td>{{ product.stop }} {{ product.currency }}</td>
-                    <td><a href="" title="{{ product.underlying }}" taget="_blank">{{ product.underlying }}</a></td>
-                    <td><a href="{{ product.recommandation }}" title="{{ product.recommandation }}" target="_blank">Lien</a></td>
+                    <th>Status</th>
+                    <th>Direction</ht>
+                    <th>Product name</th>
+                    <th>Unit cost</th>
+                    <th>Quantity</th>
+                    <th>Objectif</th>
+                    <th>Stop</th>
+                    <th>Underlying</th>
+                    <th>Recomendation</th>
                 </tr>
-            {% endfor %}
-        {% else %}
-            <tr>
-                <td>Aucun produit trouvé !</td>
-            </tr>
-        {% endif %}
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+                {% if product_list %}
+                    {% for product in product_list %}
+                        <tr>
+                            <td class="text-center">{{ product.status }}</td>
+                            <td class="text-center">{{ product.direction }}</td>
+                            <td><a href="{{ product.rtl_quote_url }}" title="{{ product.name }}" target="_blank">{{ product.name }}</a></td>
+                            <td>{{ product.unit_cost }} {{ product.currency }}</td>
+                            <td class="text-center">{{ product.quantity }}</td>
+                            <td>{{ product.objectif }} {{ product.currency }}</td>
+                            <td>{{ product.stop }} {{ product.currency }}</td>
+                            <td><a href="" title="{{ product.underlying }}" taget="_blank">{{ product.underlying }}</a></td>
+                            <td><a href="{{ product.recommandation }}" title="{{ product.recommandation }}" target="_blank">Lien</a></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td>Aucun produit trouvé !</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
