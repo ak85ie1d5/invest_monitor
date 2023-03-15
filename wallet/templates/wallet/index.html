@@ -1,13 +1,18 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Invest Monitor</title>
-    {% load static %}
-    <link rel="stylesheet" href="{%static 'wallet/style.css' %}">
+    <link rel="shortcut icon" href="{% static 'wallet/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'wallet/style.css' %}">
 </head>
+{% load admin_urls %}
 <body>
-    <div class="im-container">
+    <header>
+        <a href="/admin" title="Admin">Admin</a>
+    </header>
+    <section>
         <table>
             <thead>
                 <tr>
@@ -20,6 +25,7 @@
                     <th>Stop</th>
                     <th>Underlying</th>
                     <th>Recomendation</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +41,7 @@
                             <td>{{ product.stop }} {{ product.currency }}</td>
                             <td><a href="" title="{{ product.underlying }}" taget="_blank">{{ product.underlying }}</a></td>
                             <td><a href="{{ product.recommandation }}" title="{{ product.recommandation }}" target="_blank">Lien</a></td>
+                            <td><a href="/admin/wallet/product/{{ product.id }}/change" title="Edit">Edit</a></td>
                         </tr>
                     {% endfor %}
                 {% else %}
@@ -44,6 +51,6 @@
                 {% endif %}
             </tbody>
         </table>
-    </div>
+    </section>
 </body>
 </html>
