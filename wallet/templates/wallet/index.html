@@ -25,8 +25,8 @@
                     <th>Stop</th>
                     <th>Underlying</th>
                     <th>Recomendation</th>
-                    <th>Updated At</th>
                     <th>Created At</th>
+                    <th>Updated At</th>
                     <th></th>
                 </tr>
             </thead>
@@ -37,14 +37,14 @@
                             <td class="text-center">{{ product.status }}</td>
                             <td class="text-center">{{ product.direction }}</td>
                             <td><a href="{{ product.rtl_quote_url }}" title="{{ product.name }}" target="_blank">{{ product.name }}</a></td>
-                            <td>{{ product.unit_cost }} {{ product.currency }}</td>
+                            <td>{{ product.unit_cost }} EUR</td>
                             <td class="text-center">{{ product.quantity }}</td>
                             <td>{{ product.objectif }} {{ product.currency }}</td>
                             <td>{{ product.stop }} {{ product.currency }}</td>
                             <td><a href="" title="{{ product.underlying }}" taget="_blank">{{ product.underlying }}</a></td>
                             <td><a href="{{ product.recommandation }}" title="{{ product.recommandation }}" target="_blank">Lien</a></td>
-                            <td>{{ product.created_at }}</td>
-                            <td>{{ product.updated_at }}</td>
+                            <td>{{ product.created_at|date:'d/m/Y H:i' }}</td>
+                            <td>{{ product.updated_at|date:'d/m/Y H:i' }}</td>
                             <td><a href="/admin/wallet/product/{{ product.id }}/change" title="Edit">Edit</a></td>
                         </tr>
                     {% endfor %}
