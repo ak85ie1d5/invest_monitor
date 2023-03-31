@@ -41,7 +41,7 @@
                             <td class="text-center">{{ product.quantity }}</td>
                             <td>{{ product.objectif }} {{ product.currency }}</td>
                             <td>{{ product.stop }} {{ product.currency }}</td>
-                            <td><a href="" title="{{ product.underlying }}" taget="_blank">{{ product.underlying }}</a></td>
+                            <td><a href="{{ product.underlying_rtl_quote_url }}" title="{{ product.underlying_rtl_quote_url }}" taget="_blank">{{ product.underlying_name }}</a></td>
                             <td><a href="{{ product.recommandation }}" title="{{ product.recommandation }}" target="_blank">Lien</a></td>
                             <td>{{ product.created_at|date:'d/m/Y H:i' }}</td>
                             <td>{{ product.updated_at|date:'d/m/Y H:i' }}</td>

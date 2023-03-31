@@ -46,5 +46,14 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    @property
+    def underlying_name(self):
+        return self.underlying.name if self.underlying else None
+
+    @property
+    def underlying_rtl_quote_url(self):
+        return self.underlying.rtl_quote_url if self.underlying else None
+
+    
     def __str__(self):
         return self.name
