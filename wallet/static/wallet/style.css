@@ -26,6 +26,28 @@ a {
     color: #000;
 }
 
+summary {
+    cursor: pointer;
+}
+
 .text-center {
     text-align: center;
+}
+
+.positive {
+    background: #e3f7dd;
+    color: green;
+    font-weight: bold;
+}
+
+.negative {
+    background: #f7dddd;
+    color: red;
+    font-weight: bold;
+}
+
+.quote-detail {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 3px 0;
 }

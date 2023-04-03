@@ -66,7 +66,8 @@ class Product(models.Model):
         response = requests.get('https://www.boursedirect.fr/api/tradingview/history?symbol=XPAR:'+self.underlying.memonic_code+'&resolution=1D&from='+unix_timestamp+'&to='+unix_timestamp+'&currencyCode='+self.currency.name)
         quote_data = json.loads(response.text)
 
-        return quote_data['c'][0]
+        #return quote_data['c'][0]
+        return quote_data
     
     def __str__(self):
         return self.name

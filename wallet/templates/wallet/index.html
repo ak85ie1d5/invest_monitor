@@ -41,9 +41,18 @@
                             <td><a href="{{ product.rtl_quote_url }}" title="{{ product.name }}" target="_blank">{{ product.name }}</a></td>
                             <td>{{ product.unit_cost }} EUR</td>
                             <td class="text-center">{{ product.quantity }}</td>
-                            <td>{{ product.get_rtl_quote }} {{ product.currency }}</td>
-                            <td>{{ product.objectif }} {{ product.currency }}</td>
-                            <td>{{ product.stop }} {{ product.currency }}</td>
+                            <td>
+                                <details>
+                                    <summary>{{ product.get_rtl_quote.c.0 }} {{ product.currency }}</summary>
+                                    <ul class="quote-detail">
+                                        <li>O: {{ product.get_rtl_quote.o.0 }} {{ product.currency }}</li>
+                                        <li>H: {{ product.get_rtl_quote.h.0 }} {{ product.currency }}</li>
+                                        <li>B: {{ product.get_rtl_quote.l.0 }} {{ product.currency }}</li>
+                                    <ul>
+                                </details>
+                            </td>
+                            <td class="{% if  product.get_rtl_quote >= product.objectif %}positive{% endif %}">{{ product.objectif }} {{ product.currency }}</td>
+                            <td class="{% if  product.get_rtl_quote <= product.stop %}negative{% endif %}">{{ product.stop }} {{ product.currency }}</td>
                             <td><a href="{{ product.underlying_rtl_quote_url }}" title="{{ product.underlying_rtl_quote_url }}" taget="_blank">{{ product.underlying_name }}</a></td>
                             <td><a href="{{ product.recommandation }}" title="{{ product.recommandation }}" target="_blank">Lien</a></td>
                             <td>{{ product.created_at|date:'d/m/Y H:i' }}</td>
