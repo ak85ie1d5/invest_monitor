@@ -12,6 +12,7 @@
     <header>
         <a href="/admin" title="Admin">Admin</a>
     </header>
+    <div class="tests" style="color:red">{{ rtl_quote }}</div>
     <section>
         <table>
             <thead>
@@ -21,6 +22,7 @@
                     <th>Product name</th>
                     <th>Unit cost</th>
                     <th>Quantity</th>
+                    <th>Cours</th>
                     <th>Objectif</th>
                     <th>Stop</th>
                     <th>Underlying</th>
@@ -39,6 +41,7 @@
                             <td><a href="{{ product.rtl_quote_url }}" title="{{ product.name }}" target="_blank">{{ product.name }}</a></td>
                             <td>{{ product.unit_cost }} EUR</td>
                             <td class="text-center">{{ product.quantity }}</td>
+                            <td>{{ product.get_rtl_quote }} {{ product.currency }}</td>
                             <td>{{ product.objectif }} {{ product.currency }}</td>
                             <td>{{ product.stop }} {{ product.currency }}</td>
                             <td><a href="{{ product.underlying_rtl_quote_url }}" title="{{ product.underlying_rtl_quote_url }}" taget="_blank">{{ product.underlying_name }}</a></td>
