@@ -70,14 +70,33 @@ class ImportArticleCommand extends Command
         });
 
         foreach ($articles as $article) {
-            $output->writeln(sprintf('[%s %s] %s', $article['date'], $article['hour'], $article['title']));
-            $output->writeln('  '.$article['url']);
+            $this->archiveArticle($article['title'], $this->parsePublicationDate($article['date'], $article['hour']) ,$article['url']);
         }
+
+        $this->entityManager->flush();
 
         $output->writeln(sprintf('<info>%d articles trouvés.</info>', \count($articles)));
 
         return Command::SUCCESS;
 
+    }
+
+    /**
+     * Persist object into archiveArticle table
+     * @param $title
+     * @param $datetime
+     * @param $link
+     * @return void
+     * @throws \DateMalformedStringException
+     */
+    private function archiveArticle($title, $datetime, $link): void
+    {
+        $articleArchive = new articleArchive();
+        $articleArchive->setTitle($title);
+        $articleArchive->setPublicationDate($datetime);
+        $articleArchive->setLink($link);
+
+        $this->entityManager->persist($articleArchive);
     }
 
     /**
