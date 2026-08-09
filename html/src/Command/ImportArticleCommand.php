@@ -6,43 +6,28 @@ use App\Entity\ArticleArchive;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DomCrawler\Crawler;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[AsCommand(
     name: 'app:import-article',
-    description: 'Add a short description for your command',
+    description: 'This commande is use to crawl Bourse Direct blog and save articles into database.',
 )]
 class ImportArticleCommand extends Command
 {
-    private const URL = 'https://www.boursedirect.fr/fr/actualites/categorie/turbos';
+    private const string URL = 'https://www.boursedirect.fr/fr/actualites/categorie/turbos';
 
     public function __construct(
-        private HttpClientInterface $boursedirectClient,
-        private EntityManagerInterface $entityManager
+        private readonly HttpClientInterface $boursedirectClient,
+        private readonly EntityManagerInterface $entityManager
     ) {
         parent::__construct();
     }
 
-    protected function configure(): void
-    {
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        //$io = new SymfonyStyle($input, $output);
-        //$io->success('You have a new command! Now make it your own! Pass --help to see your options.');
-
-
         $response = $this->boursedirectClient->request('GET', self::URL);
 
         if ($response->getStatusCode() !== 200) {
@@ -87,7 +72,6 @@ class ImportArticleCommand extends Command
      * @param $datetime
      * @param $link
      * @return void
-     * @throws \DateMalformedStringException
      */
     private function archiveArticle($title, $datetime, $link): void
     {
