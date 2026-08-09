@@ -2,6 +2,8 @@
 
 namespace App\Command;
 
+use App\Entity\ArticleArchive;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -24,8 +26,10 @@ class ImportArticleCommand extends Command
 {
     private const URL = 'https://www.boursedirect.fr/fr/actualites/categorie/turbos';
 
-    public function __construct(private HttpClientInterface $boursedirectClient)
-    {
+    public function __construct(
+        private HttpClientInterface $boursedirectClient,
+        private EntityManagerInterface $entityManager
+    ) {
         parent::__construct();
     }
 
@@ -76,8 +80,31 @@ class ImportArticleCommand extends Command
 
     }
 
-    private function archiveArticle($title, $datetime, $link)
+    /**
+     * Format datetime for doctrine.
+     *
+     * @param string $date
+     * @param string $hour
+     * @return \DateTime
+     * @throws \DateMalformedStringException
+     */
+    private function parsePublicationDate(string $date, string $hour): \DateTime
     {
+        $formatter = new \IntlDateFormatter(
+            'fr_FR',
+            \IntlDateFormatter::NONE,
+            \IntlDateFormatter::NONE,
+            'Europe/Paris',
+            \IntlDateFormatter::GREGORIAN,
+            'dd EEEE MMMM yyyy HH:mm',
+        );
 
+        $timestamp = $formatter->parse($date.' '.$hour);
+
+        if (false === $timestamp) {
+            throw new \RuntimeException(sprintf('Date illisible : "%s %s"', $date, $hour));
+        }
+
+        return new \DateTime('@'.$timestamp)->setTimezone(new \DateTimeZone('Europe/Paris'));
     }
 }
