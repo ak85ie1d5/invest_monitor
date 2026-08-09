@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\ArticleArchive;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -70,7 +71,13 @@ class ImportArticleCommand extends Command
             ++$imported;
         }
 
-        $this->entityManager->flush();
+        try {
+            $this->entityManager->flush();
+        } catch (UniqueConstraintViolationException) {
+            $output->writeln('<comment>Rien à enregistrer : ces articles viennent d\'être insérés par une exécution concurrente.</comment>');
+
+            return Command::SUCCESS;
+        }
 
         $output->writeln(sprintf('<info>%d nouveaux articles sur %d trouvés.</info>', $imported, \count($articles)));
 
