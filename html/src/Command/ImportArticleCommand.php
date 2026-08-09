@@ -24,7 +24,7 @@ class ImportArticleCommand extends Command
 {
     private const URL = 'https://www.boursedirect.fr/fr/actualites/categorie/turbos';
 
-    public function __construct(private HttpClientInterface $client)
+    public function __construct(private HttpClientInterface $boursedirectClient)
     {
         parent::__construct();
     }
@@ -33,24 +33,13 @@ class ImportArticleCommand extends Command
     {
     }
 
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //$io = new SymfonyStyle($input, $output);
         //$io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 
 
-        $response = $this->client->request(
-            'GET',
-            self::URL,
-            [
-                'headers' => [
-                    'User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-                    'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                    'Accept-Language' => 'fr-FR,fr;q=0.9',
-                ],
-            ]
-        );
+        $response = $this->boursedirectClient->request('GET', self::URL);
 
         if ($response->getStatusCode() !== 200) {
             $output->writeln($response->getContent(false));
@@ -84,6 +73,11 @@ class ImportArticleCommand extends Command
         $output->writeln(sprintf('<info>%d articles trouvés.</info>', \count($articles)));
 
         return Command::SUCCESS;
+
+    }
+
+    private function archiveArticle($title, $datetime, $link)
+    {
 
     }
 }
