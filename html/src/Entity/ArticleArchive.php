@@ -6,6 +6,7 @@ use App\Repository\ArticleArchiveRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticleArchiveRepository::class)]
+#[ORM\UniqueConstraint(name: 'uniq_article_archive_link', columns: ['link'])]
 class ArticleArchive
 {
     #[ORM\Id]

@@ -16,6 +16,27 @@ class ArticleArchiveRepository extends ServiceEntityRepository
         parent::__construct($registry, ArticleArchive::class);
     }
 
+    /**
+     * Returns, among the given links, those already stored in database.
+     *
+     * @param string[] $links
+     *
+     * @return string[]
+     */
+    public function findExistingLinks(array $links): array
+    {
+        if (!$links) {
+            return [];
+        }
+
+        return $this->createQueryBuilder('a')
+            ->select('a.link')
+            ->where('a.link IN (:links)')
+            ->setParameter('links', $links)
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
     //    /**
     //     * @return ArticleArchive[] Returns an array of ArticleArchive objects
     //     */

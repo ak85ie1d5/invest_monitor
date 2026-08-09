@@ -54,13 +54,25 @@ class ImportArticleCommand extends Command
             ];
         });
 
+        $existingLinks = array_flip(
+            $this->entityManager->getRepository(ArticleArchive::class)
+                ->findExistingLinks(array_column($articles, 'url'))
+        );
+
+        $imported = 0;
+
         foreach ($articles as $article) {
+            if (isset($existingLinks[$article['url']])) {
+                continue;
+            }
+
             $this->archiveArticle($article['title'], $this->parsePublicationDate($article['date'], $article['hour']) ,$article['url']);
+            ++$imported;
         }
 
         $this->entityManager->flush();
 
-        $output->writeln(sprintf('<info>%d articles trouvés.</info>', \count($articles)));
+        $output->writeln(sprintf('<info>%d nouveaux articles sur %d trouvés.</info>', $imported, \count($articles)));
 
         return Command::SUCCESS;
 
