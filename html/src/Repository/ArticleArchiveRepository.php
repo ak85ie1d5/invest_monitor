@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\ArticleArchive;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -35,6 +36,25 @@ class ArticleArchiveRepository extends ServiceEntityRepository
             ->setParameter('links', $links)
             ->getQuery()
             ->getSingleColumnResult();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function findAllSortedByDate(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT `aa`.`title`, `aa`.`publication_date`, `aa`.`link`
+            FROM `article_archive` `aa`
+            ORDER BY `aa`.`publication_date` DESC;
+        ';
+
+        $resultSet = $conn->executeQuery($sql);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
     }
 
     //    /**
