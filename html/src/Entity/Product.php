@@ -6,6 +6,8 @@ use App\Enum\Currency;
 use App\Enum\ProductDirection;
 use App\Enum\ProductType;
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -46,6 +48,17 @@ class Product
 
     #[ORM\Column(length: 12, nullable: true)]
     private ?string $underlyingIsin = null;
+
+    /**
+     * @var Collection<int, Wallet>
+     */
+    #[ORM\OneToMany(targetEntity: Wallet::class, mappedBy: 'Product')]
+    private Collection $walletRows;
+
+    public function __construct()
+    {
+        $this->walletRows = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -168,6 +181,36 @@ class Product
     public function setUnderlyingIsin(?string $underlyingIsin): static
     {
         $this->underlyingIsin = $underlyingIsin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Wallet>
+     */
+    public function getWalletRows(): Collection
+    {
+        return $this->walletRows;
+    }
+
+    public function addWalletRow(Wallet $walletRow): static
+    {
+        if (!$this->walletRows->contains($walletRow)) {
+            $this->walletRows->add($walletRow);
+            $walletRow->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWalletRow(Wallet $walletRow): static
+    {
+        if ($this->walletRows->removeElement($walletRow)) {
+            // set the owning side to null (unless already changed)
+            if ($walletRow->getProduct() === $this) {
+                $walletRow->setProduct(null);
+            }
+        }
 
         return $this;
     }

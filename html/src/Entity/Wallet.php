@@ -34,6 +34,10 @@ class Wallet
     #[ORM\ManyToOne(inversedBy: 'wallets')]
     private ?ArticleArchive $Article = null;
 
+    #[ORM\ManyToOne(inversedBy: 'walletRows')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Product $Product = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +123,18 @@ class Wallet
     public function setArticle(?ArticleArchive $Article): static
     {
         $this->Article = $Article;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->Product;
+    }
+
+    public function setProduct(?Product $Product): static
+    {
+        $this->Product = $Product;
 
         return $this;
     }

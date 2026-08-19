@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\ArticleArchive;
+use App\Entity\Product;
 use App\Entity\Wallet;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -24,6 +25,10 @@ class WalletRowType extends AbstractType
             ->add('Article', EntityType::class, [
                 'class' => ArticleArchive::class,
                 'choice_label' => 'title',
+            ])
+            ->add('Product', EntityType::class, [
+                'class' => Product::class,
+                'choice_label' => 'name',
             ])
             ->add('submit', SubmitType::class, [])
         ;
