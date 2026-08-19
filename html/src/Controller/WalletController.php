@@ -23,8 +23,8 @@ final class WalletController extends AbstractController
         ]);
     }
 
-    #[Route('/wallet/add-product', name: 'app_wallet_add_product', methods: ['GET', 'POST'])]
-    public function addProduct(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/wallet/add-row', name: 'app_wallet_add_row', methods: ['GET', 'POST'])]
+    public function addRow(Request $request, EntityManagerInterface $entityManager): Response
     {
         $wallet = new Wallet();
         $form = $this->createForm(WalletRowType::class, $wallet);
@@ -34,13 +34,13 @@ final class WalletController extends AbstractController
             $entityManager->persist($wallet);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Produit ajouté au portefeuille.');
+            $this->addFlash('success', 'Row added into your wallet.');
 
             return $this->redirectToRoute('app_wallet');
         }
 
-        return $this->render('wallet/add_product.html.twig', [
-            'title' => "Ajouter un produit",
+        return $this->render('wallet/add_row.html.twig', [
+            'title' => "Add row in the wallet",
             'form' => $form->createView()
         ]);
     }
