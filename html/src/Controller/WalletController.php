@@ -13,10 +13,13 @@ use Symfony\Component\Routing\Attribute\Route;
 final class WalletController extends AbstractController
 {
     #[Route('/wallet', name: 'app_wallet')]
-    public function index(): Response
+    public function index(EntityManagerInterface $entityManager): Response
     {
+        $walletRows = $entityManager->getRepository(Wallet::class)->findAll();
+
         return $this->render('wallet/index.html.twig', [
-            'controller_name' => 'WalletController',
+            'title' => 'Porte-feuille',
+            'walletRows' => $walletRows,
         ]);
     }
 
