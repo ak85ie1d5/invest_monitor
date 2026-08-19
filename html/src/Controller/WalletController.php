@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Wallet;
-use App\Form\ProductType;
+use App\Form\WalletRowType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +27,7 @@ final class WalletController extends AbstractController
     public function addProduct(Request $request, EntityManagerInterface $entityManager): Response
     {
         $wallet = new Wallet();
-        $form = $this->createForm(ProductType::class, $wallet);
+        $form = $this->createForm(WalletRowType::class, $wallet);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
