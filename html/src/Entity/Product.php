@@ -32,14 +32,20 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?float $StopLossLevel = null;
 
-    #[ORM\Column(enumType: Currency::class)]
+    #[ORM\Column(nullable: true, enumType: Currency::class)]
     private ?Currency $stopLossCurrency = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTime $endDate = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $leverage = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $underlyingName = null;
+
+    #[ORM\Column(length: 12, nullable: true)]
+    private ?string $underlyingIsin = null;
 
     public function getId(): ?int
     {
@@ -138,6 +144,30 @@ class Product
     public function setLeverage(float $leverage): static
     {
         $this->leverage = $leverage;
+
+        return $this;
+    }
+
+    public function getUnderlyingName(): ?string
+    {
+        return $this->underlyingName;
+    }
+
+    public function setUnderlyingName(?string $underlyingName): static
+    {
+        $this->underlyingName = $underlyingName;
+
+        return $this;
+    }
+
+    public function getUnderlyingIsin(): ?string
+    {
+        return $this->underlyingIsin;
+    }
+
+    public function setUnderlyingIsin(?string $underlyingIsin): static
+    {
+        $this->underlyingIsin = $underlyingIsin;
 
         return $this;
     }

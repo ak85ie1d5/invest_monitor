@@ -9,4 +9,5 @@ enum ProductType: string
     case TurbosInfinis = "Turbos infinis";
     case TurbosInfinisBEST = "Turbos infinis BEST";
     case Warrants = "Warrants";
+    case Stocks = "Actions";
 }
