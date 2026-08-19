@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticleArchiveRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticleArchiveRepository::class)]
@@ -22,6 +24,17 @@ class ArticleArchive
 
     #[ORM\Column(length: 255)]
     private ?string $link = null;
+
+    /**
+     * @var Collection<int, Wallet>
+     */
+    #[ORM\OneToMany(targetEntity: Wallet::class, mappedBy: 'Article')]
+    private Collection $wallets;
+
+    public function __construct()
+    {
+        $this->wallets = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -60,6 +73,36 @@ class ArticleArchive
     public function setLink(string $link): static
     {
         $this->link = $link;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Wallet>
+     */
+    public function getWallets(): Collection
+    {
+        return $this->wallets;
+    }
+
+    public function addWallet(Wallet $wallet): static
+    {
+        if (!$this->wallets->contains($wallet)) {
+            $this->wallets->add($wallet);
+            $wallet->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWallet(Wallet $wallet): static
+    {
+        if ($this->wallets->removeElement($wallet)) {
+            // set the owning side to null (unless already changed)
+            if ($wallet->getArticle() === $this) {
+                $wallet->setArticle(null);
+            }
+        }
 
         return $this;
     }
