@@ -5,6 +5,9 @@
 {% block body %}
 
 <div class="example-wrapper">
+    {% block aside %}
+        {% include 'sidebar.html.twig' %}
+    {% endblock %}
     <h1>{{ title }}</h1>
 
     <table>

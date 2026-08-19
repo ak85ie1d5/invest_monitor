@@ -25,6 +25,9 @@
             {% endfor %}
         {% endfor %}
 
-        {% block body %}{% endblock %}
+        {% block body %}
+            {% block aside %}
+            {% endblock %}
+        {% endblock %}
     </body>
 </html>
