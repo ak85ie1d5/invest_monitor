@@ -8,11 +8,10 @@
 
 {% block header %}
     <h1 class="">{{ title }}</h1>
-    <a href="{{ path('app_wallet_add_row') }}">Add new product</a>
+    <a href="{{ path('app_wallet_add_row') }}" class="bg-cyan-600 py-1 px-3 text-white font-bold text-sm rounded-lg">Add new product</a>
 {% endblock %}
 
 {% block body %}
-    {{ dump(walletRows)}}
     <table>
         <thead>
         <tr>
@@ -21,6 +20,8 @@
             <th>Direction</th>
             <th>Quantity purchased</th>
             <th>Purchase price</th>
+            <th>Stop loss level</th>
+            <th>End date</th>
             <th>Selling price</th>
             <th>Quantity sold</th>
             <th>Date of purchase</th>
@@ -35,11 +36,13 @@
                 <td>{{ walletRow.Product.productType.value }}</td>
                 <td>{{ walletRow.Product.productDirection.value }}</td>
                 <td>{{ walletRow.quantityPurchased }}</td>
-                <td>{{ walletRow.purchasePrice }}</td>
+                <td>{{ walletRow.purchasePrice|format_currency('EUR') }}</td>
+                <td>{{ walletRow.Product.StopLossLevel }} {{ walletRow.Product.stopLossCurrency.value }}</td>
+                <td>{{ walletRow.Product.endDate ? walletRow.Product.endDate|format_datetime('short') : '—' }}</td>
                 <td>{{ walletRow.sellingPrice }}</td>
                 <td>{{ walletRow.quantitySold }}</td>
-                <td>{{ walletRow.dateOfPurchase|date }}</td>
-                <td>{{ walletRow.dateOfSale|date }}</td>
+                <td>{{ walletRow.dateOfPurchase ? walletRow.dateOfPurchase|format_datetime('short') : '—' }}</td>
+                <td>{{ walletRow.dateOfSale ? walletRow.dateOfSale|format_datetime('short') : '—' }}</td>
                 <td>
                     <a href="{{ walletRow.Article.link }}" title="{{ walletRow.Article.title }}" target="_blank">Lien</a>
                 </td>

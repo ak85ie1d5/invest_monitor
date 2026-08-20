@@ -2,18 +2,16 @@
 
 {% block title %}{{ title }}{% endblock %}
 
+{% block aside %}
+    {% include 'sidebar.html.twig' %}
+{% endblock %}
+
+{% block header %}
+    <h1 class="">{{ title }}</h1>
+    <a href="{{ path('app_product_add') }}" class="bg-cyan-600 py-1 px-3 text-white font-bold text-sm rounded-lg">Add new product</a>
+{% endblock %}
+
 {% block body %}
-
-
-<div class="example-wrapper">
-    {% block aside %}
-        {% include 'sidebar.html.twig' %}
-    {% endblock %}
-
-    <a href="{{ path('app_product_add') }}">Add new product</a>
-
-    <h1>{{ title }}</h1>
-
     <table>
         <thead>
             <tr>
@@ -36,7 +34,7 @@
                     <td>{{ product.productDirection.value }}</td>
                     <td>{{ product.Isin }}</td>
                     <td>{{ product.StopLossLevel }} {{ product.stopLossCurrency.value }}</td>
-                    <td>{{ product.endDate }}</td>
+                    <td>{{ product.endDate ? product.endDate|format_datetime('short') : '—' }}</td>
                     <td>{{ product.leverage }}</td>
                     <td>{{ product.underlyingName }}</td>
                     <td>{{ product.underlyingIsin }}</td>
@@ -44,5 +42,4 @@
             {% endfor %}
         </tbody>
     </table>
-</div>
 {% endblock %}
