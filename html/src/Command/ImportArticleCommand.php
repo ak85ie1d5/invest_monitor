@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\ArticleArchive;
+use App\Service\NextcloudTalkNotifier;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -22,7 +23,8 @@ class ImportArticleCommand extends Command
 
     public function __construct(
         private readonly HttpClientInterface $boursedirectClient,
-        private readonly EntityManagerInterface $entityManager
+        private readonly EntityManagerInterface $entityManager,
+        private readonly NextcloudTalkNotifier $talkNotifier,
     ) {
         parent::__construct();
     }
@@ -60,7 +62,7 @@ class ImportArticleCommand extends Command
                 ->findExistingLinks(array_column($articles, 'url'))
         );
 
-        $imported = 0;
+        $newArticles = [];
 
         foreach ($articles as $article) {
             if (isset($existingLinks[$article['url']])) {
@@ -68,7 +70,7 @@ class ImportArticleCommand extends Command
             }
 
             $this->archiveArticle($article['title'], $this->parsePublicationDate($article['date'], $article['hour']) ,$article['url']);
-            ++$imported;
+            $newArticles[] = $article;
         }
 
         try {
@@ -79,10 +81,38 @@ class ImportArticleCommand extends Command
             return Command::SUCCESS;
         }
 
-        $output->writeln(sprintf('<info>%d nouveaux articles sur %d trouvés.</info>', $imported, \count($articles)));
+        $this->notifyNewArticles($newArticles, $output);
+
+        $output->writeln(sprintf('<info>%d nouveaux articles sur %d trouvés.</info>', \count($newArticles), \count($articles)));
 
         return Command::SUCCESS;
 
+    }
+
+    /**
+     * Announce every freshly imported article in the Nextcloud Talk conversation.
+     *
+     * A notification failure must not fail the import: articles are already saved.
+     *
+     * @param array<int, array{title: string, url: string|null}> $articles
+     */
+    private function notifyNewArticles(array $articles, OutputInterface $output): void
+    {
+        foreach ($articles as $article) {
+            $message = null === $article['url']
+                ? $article['title']
+                : sprintf('[%s](%s)', $article['title'], $article['url']);
+
+            try {
+                $this->talkNotifier->send($message);
+            } catch (\Throwable $exception) {
+                $output->writeln(sprintf(
+                    '<comment>Notification Talk échouée pour "%s" : %s</comment>',
+                    $article['title'],
+                    $exception->getMessage(),
+                ));
+            }
+        }
     }
 
     /**
