@@ -32,10 +32,10 @@
             {% for product in products %}
                 <tr>
                     <td>{{ product.name }}</td>
-                    <td>{{ product.productType }}</td>
-                    <td>{{ product.productDirection }}</td>
+                    <td>{{ product.productType.value }}</td>
+                    <td>{{ product.productDirection.value }}</td>
                     <td>{{ product.Isin }}</td>
-                    <td>{{ product.StopLossLevel }} {{ stopLossCurrency }}</td>
+                    <td>{{ product.StopLossLevel }} {{ product.stopLossCurrency.value }}</td>
                     <td>{{ product.endDate }}</td>
                     <td>{{ product.leverage }}</td>
                     <td>{{ product.underlyingName }}</td>
