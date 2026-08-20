@@ -25,9 +25,21 @@
             {% endfor %}
         {% endfor %}
 
-        {% block body %}
-            {% block aside %}
-            {% endblock %}
-        {% endblock %}
+        <div class="flex">
+            <aside class="w-40 flex-none p-4">
+                {% block aside %}
+                {% endblock %}
+            </aside>
+            <div class="w-60 flex-auto p-4">
+                <header>
+                    {% block header %}
+                    {% endblock %}
+                </header>
+                <main>
+                    {% block body %}
+                    {% endblock %}
+                </main>
+            </div>
+        </div>
     </body>
 </html>
