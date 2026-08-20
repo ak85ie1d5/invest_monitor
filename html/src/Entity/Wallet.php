@@ -22,7 +22,7 @@ class Wallet
     #[ORM\Column(nullable: true)]
     private ?float $sellingPrice = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $quantitySold = null;
 
     #[ORM\Column]
