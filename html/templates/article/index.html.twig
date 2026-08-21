@@ -11,24 +11,24 @@
 {% endblock %}
 
 {% block body %}
-    <table>
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Date de publication</th>
-                <th>Lien</th>
-            </tr>
-        </thead>
-        <tbody>
+    <twig:Table>
+        <twig:Table:Head>
+            <twig:Table:Row>
+                <twig:Table:Header>Titre</twig:Table:Header>
+                <twig:Table:Header>Date de publication</twig:Table:Header>
+                <twig:Table:Header></twig:Table:Header>
+            </twig:Table:Row>
+        </twig:Table:Head>
+        <twig:Table:Body>
             {% for article in articles %}
-                <tr>
-                    <td>{{ article.title }}</td>
-                    <td>{{ article.publication_date|date("H:i m/d/Y") }}</td>
-                    <td>
-                        <a href="{{ article.link }}" target="_blank">Lien</a>
-                    </td>
-                </tr>
+                <twig:Table:Row>
+                    <twig:Table:Cell>{{ article.title }}</twig:Table:Cell>
+                    <twig:Table:Cell>{{ article.publication_date|date("H:i m/d/Y") }}</twig:Table:Cell>
+                    <twig:Table:Cell>
+                        <a href="{{ article.link }}" target="_blank">View</a>
+                    </twig:Table:Cell>
+                </twig:Table:Row>
             {% endfor %}
-        </tbody>
-    </table>
+        </twig:Table:Body>
+    </twig:Table>
 {% endblock %}

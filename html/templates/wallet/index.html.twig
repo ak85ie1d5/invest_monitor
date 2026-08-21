@@ -14,44 +14,41 @@
         <h1 class="text-2xl/8 font-semibold text-zinc-950 sm:text-xl/8 dark:text-white">{{ title }}</h1>
         <a href="{{ path('app_wallet_add_row') }}" class="relative isolate inline-flex items-baseline justify-center gap-x-2 rounded-lg border text-base/6 font-semibold px-[calc(--spacing(3.5)-1px)] py-[calc(--spacing(2.5)-1px)] sm:px-[calc(--spacing(3)-1px)] sm:py-[calc(--spacing(1.5)-1px)] sm:text-sm/6 focus:not-data-focus:outline-hidden data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-blue-500 data-disabled:opacity-50 *:data-[slot=icon]:-mx-0.5 *:data-[slot=icon]:my-0.5 *:data-[slot=icon]:size-5 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:self-center *:data-[slot=icon]:text-(--btn-icon) sm:*:data-[slot=icon]:my-1 sm:*:data-[slot=icon]:size-4 forced-colors:[--btn-icon:ButtonText] forced-colors:data-hover:[--btn-icon:ButtonText] border-transparent bg-(--btn-border) dark:bg-(--btn-bg) before:absolute before:inset-0 before:-z-10 before:rounded-[calc(var(--radius-lg)-1px)] before:bg-(--btn-bg) before:shadow-sm dark:before:hidden dark:border-white/5 after:absolute after:inset-0 after:-z-10 after:rounded-[calc(var(--radius-lg)-1px)] after:shadow-[inset_0_1px_--theme(--color-white/15%)] data-active:after:bg-(--btn-hover-overlay) data-hover:after:bg-(--btn-hover-overlay) dark:after:-inset-px dark:after:rounded-lg data-disabled:before:shadow-none data-disabled:after:shadow-none text-white [--btn-bg:var(--color-zinc-900)] [--btn-border:var(--color-zinc-950)]/90 [--btn-hover-overlay:var(--color-white)]/10 dark:text-white dark:[--btn-bg:var(--color-zinc-600)] dark:[--btn-hover-overlay:var(--color-white)]/5 [--btn-icon:var(--color-zinc-400)] data-active:[--btn-icon:var(--color-zinc-300)] data-hover:[--btn-icon:var(--color-zinc-300)] cursor-default">+ Add item</a>
     </div>
-    <div class="mt-8 overflow-x-auto whitespace-nowrap">
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Direction</th>
-                <th>Quantity purchased</th>
-                <th>Purchase price</th>
-                <th>Stop loss level</th>
-                <th>End date</th>
-                <th>Selling price</th>
-                <th>Quantity sold</th>
-                <th>Date of purchase</th>
-                <th>Date of sale</th>
-                <th>Article</th>
-            </tr>
-            </thead>
-            <tbody>
+
+    <twig:Table>
+        <twig:Table:Head>
+            <twig:Table:Row>
+                <twig:Table:Header>Name</twig:Table:Header>
+                <twig:Table:Header>Type</twig:Table:Header>
+                <twig:Table:Header>Direction</twig:Table:Header>
+                <twig:Table:Header>Quantity purchased</twig:Table:Header>
+                <twig:Table:Header>Purchase price</twig:Table:Header>
+                <twig:Table:Header>Stop loss level</twig:Table:Header>
+                <twig:Table:Header>End date</twig:Table:Header>
+                <twig:Table:Header>Selling price</twig:Table:Header>
+                <twig:Table:Header>Quantity sold</twig:Table:Header>
+                <twig:Table:Header>Date of purchase</twig:Table:Header>
+                <twig:Table:Header>Date of sale</twig:Table:Header>
+                <twig:Table:Header>Article</twig:Table:Header>
+            </twig:Table:Row>
+        </twig:Table:Head>
+        <twig:Table:Body>
             {% for walletRow in walletRows %}
-                <tr>
-                    <td>{{ walletRow.Product.name }}</td>
-                    <td>{{ walletRow.Product.productType.value }}</td>
-                    <td>{{ walletRow.Product.productDirection.value }}</td>
-                    <td>{{ walletRow.quantityPurchased }}</td>
-                    <td>{{ walletRow.purchasePrice|format_currency('EUR') }}</td>
-                    <td>{{ walletRow.Product.StopLossLevel }} {{ walletRow.Product.stopLossCurrency.value }}</td>
-                    <td>{{ walletRow.Product.endDate ? walletRow.Product.endDate|format_datetime('short') : '—' }}</td>
-                    <td>{{ walletRow.sellingPrice }}</td>
-                    <td>{{ walletRow.quantitySold }}</td>
-                    <td>{{ walletRow.dateOfPurchase ? walletRow.dateOfPurchase|format_datetime('short') : '—' }}</td>
-                    <td>{{ walletRow.dateOfSale ? walletRow.dateOfSale|format_datetime('short') : '—' }}</td>
-                    <td>
-                        <a href="{{ walletRow.Article.link }}" title="{{ walletRow.Article.title }}" target="_blank">Lien</a>
-                    </td>
-                </tr>
+                <twig:Table:Row>
+                    <twig:Table:Cell>{{ walletRow.Product.name }}</twig:Table:Cell>
+                    <twig:Table:Cell>{{ walletRow.Product.productType.value }}</twig:Table:Cell>
+                    <twig:Table:Cell>{{ walletRow.Product.productDirection.value }}</twig:Table:Cell>
+                    <twig:Table:Cell>{{ walletRow.quantityPurchased }}</twig:Table:Cell>
+                    <twig:Table:Cell>{{ walletRow.purchasePrice|format_currency('EUR') }}</twig:Table:Cell>
+                    <twig:Table:Cell>{{ walletRow.Product.StopLossLevel }} {{ walletRow.Product.stopLossCurrency.value }}</twig:Table:Cell>
+                    <twig:Table:Cell>{{ walletRow.Product.endDate ? walletRow.Product.endDate|format_datetime('short') : '—' }}</twig:Table:Cell>
+                    <twig:Table:Cell>{{ walletRow.sellingPrice }}</twig:Table:Cell>
+                    <twig:Table:Cell>{{ walletRow.quantitySold }}</twig:Table:Cell>
+                    <twig:Table:Cell>{{ walletRow.dateOfPurchase ? walletRow.dateOfPurchase|format_datetime('short') : '—' }}</twig:Table:Cell>
+                    <twig:Table:Cell>{{ walletRow.dateOfSale ? walletRow.dateOfSale|format_datetime('short') : '—' }}</twig:Table:Cell>
+                    <twig:Table:Cell><a href="{{ walletRow.Article.link }}" title="{{ walletRow.Article.title }}" target="_blank">Lien</a></twig:Table:Cell>
+                </twig:Table:Row>
             {% endfor %}
-            </tbody>
-        </table>
-    </div>
+        </twig:Table:Body>
+    </twig:Table>
 {% endblock %}
