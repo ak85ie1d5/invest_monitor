@@ -26,8 +26,10 @@ final class WalletController extends AbstractController
     #[Route('/wallet/add-row', name: 'app_wallet_add_row', methods: ['GET', 'POST'])]
     public function addRow(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $title = 'Add row in the wallet';
+
         $wallet = new Wallet();
-        $form = $this->createForm(WalletRowType::class, $wallet);
+        $form = $this->createForm(WalletRowType::class, $wallet, ['form_title' => $title]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -40,7 +42,7 @@ final class WalletController extends AbstractController
         }
 
         return $this->render('wallet/add_row.html.twig', [
-            'title' => "Add row in the wallet",
+            'title' => $title,
             'form' => $form->createView()
         ]);
     }

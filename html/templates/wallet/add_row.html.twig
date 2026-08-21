@@ -7,14 +7,10 @@
 {% endblock %}
 
 {% block header %}
-    <h1 class="">{{ title }}</h1>
-    <a href="{{ path('app_wallet') }}" class="bg-cyan-600 py-1 px-3 text-white font-bold text-sm rounded-lg">Return to the wallet</a>
 {% endblock %}
 
 {% block body %}
-    <div class="example-wrapper">
-        {{ form_start(form) }}
-            {{ form_widget(form) }}
-        {{ form_end(form) }}
-    </div>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
 {% endblock %}

@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
-
+.required:after {
+    content: " *";
+    color: var(--color-red-500);
+}
 
 table {
     font-size: var(--text-sm);

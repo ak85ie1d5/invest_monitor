@@ -26,8 +26,9 @@ final class ProductController extends AbstractController
     #[Route('/product/add', name: 'app_product_add', methods: ['GET', 'POST'])]
     public function add_product(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $title = "Add new product";
         $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductType::class, $product, ['form_title' => $title]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -40,7 +41,7 @@ final class ProductController extends AbstractController
         }
 
         return $this->render('product/add_product.html.twig', [
-            'title' => "Add product",
+            'title' => $title,
             'form' => $form->createView(),
         ]);
     }
