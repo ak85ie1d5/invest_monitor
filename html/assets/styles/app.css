@@ -1,14 +1,6 @@
 @import "tailwindcss";
 
-body {
-    color: var(--color-gray-900);
-}
 
-h1 {
-    font-size: var(--text-3xl);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--text-3xl--line-height);
-}
 
 table {
     font-size: var(--text-sm);
