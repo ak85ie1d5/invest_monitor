@@ -1,2 +1,4 @@
 .spyproject
-!database/*
+database/*
+__pycache__
+.env

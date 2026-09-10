@@ -1,0 +1,29 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+framework:
+    secret: '%env(APP_SECRET)%'
+
+    # Note that the session will be started ONLY if you read or write from it.
+    session: true
+
+    #esi: true
+    #fragments: true
+    http_client:
+        scoped_clients:
+            boursedirect.client:
+                base_uri: 'https://www.boursedirect.fr'
+                headers:
+                    User-Agent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
+                    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+                    Accept-Language: 'fr-FR,fr;q=0.9'
+            nextcloud.client:
+                base_uri: '%env(NEXTCLOUD_URL)%'
+                auth_basic: '%env(NEXTCLOUD_USER)%:%env(NEXTCLOUD_APP_PASSWORD)%'
+                headers:
+                    OCS-APIRequest: 'true'
+                    Accept: 'application/json'
+
+when@test:
+    framework:
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.mock_file
