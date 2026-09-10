@@ -1,3 +1,4 @@
 .spyproject
 database/*
 __pycache__
+.env
