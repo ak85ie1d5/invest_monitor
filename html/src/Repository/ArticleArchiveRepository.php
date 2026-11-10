@@ -62,6 +62,24 @@ class ArticleArchiveRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+    public function findByFilters(?string $title, bool $showHidden = false): array
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a.title, a.publicationDate AS publication_date, a.link')
+            ->orderBy('a.publicationDate', 'DESC');
+
+        if (!$showHidden) {
+            $qb->andWhere('a.isVisible = true');
+        }
+
+        if ($title) {
+            $qb->andWhere('a.title LIKE :title')
+                ->setParameter('title', '%' . addcslashes($title, '%_') . '%');
+        }
+
+        return $qb->getQuery()->getArrayResult();
+    }
+
     //    /**
     //     * @return ArticleArchive[] Returns an array of ArticleArchive objects
     //     */

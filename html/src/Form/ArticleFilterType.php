@@ -16,19 +16,26 @@ class ArticleFilterType extends AbstractType
     {
         $builder
             ->add('title', SearchType::class, [
+                'required' => false,
                 'attr' => [
                     'placeholder' => 'Totalenergies, Netflix...',
                 ]
             ])
-            ->add('isVisible', CheckboxType::class, [])
-            ->add('submit', SubmitType::class, [])
+            ->add('showHidden', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Show hidden articles',
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Filter',
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'method' => 'GET',
+            'csrf_protection' => false,
         ]);
     }
 }
