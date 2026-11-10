@@ -11,6 +11,10 @@
 {% endblock %}
 
 {% block body %}
+    {{ form_start(articleFilterForm) }}
+        {{ form_widget(articleFilterForm) }}
+    {{ form_end(articleFilterForm) }}
+
     <twig:Table>
         <twig:Table:Head>
             <twig:Table:Row>

@@ -46,9 +46,14 @@ class ArticleArchiveRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-            SELECT `aa`.`title`, `aa`.`publication_date`, `aa`.`link`
+            SELECT
+                `aa`.`title`,
+                `aa`.`publication_date`,
+                `aa`.`link`
             FROM `article_archive` `aa`
-            ORDER BY `aa`.`publication_date` DESC;
+                WHERE `aa`.`is_visible` = 1
+                ORDER BY `aa`.`publication_date`
+                DESC;
         ';
 
         $resultSet = $conn->executeQuery($sql);
