@@ -46,15 +46,38 @@ class ArticleArchiveRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-            SELECT `aa`.`title`, `aa`.`publication_date`, `aa`.`link`
+            SELECT
+                `aa`.`title`,
+                `aa`.`publication_date`,
+                `aa`.`link`
             FROM `article_archive` `aa`
-            ORDER BY `aa`.`publication_date` DESC;
+                WHERE `aa`.`is_visible` = 1
+                ORDER BY `aa`.`publication_date`
+                DESC;
         ';
 
         $resultSet = $conn->executeQuery($sql);
 
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
+    }
+
+    public function findByFilters(?string $title, bool $showHidden = false): array
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a.id, a.title, a.publicationDate AS publication_date, a.link, a.isVisible AS is_visible')
+            ->orderBy('a.publicationDate', 'DESC');
+
+        if (!$showHidden) {
+            $qb->andWhere('a.isVisible = true');
+        }
+
+        if ($title) {
+            $qb->andWhere('a.title LIKE :title')
+                ->setParameter('title', '%' . addcslashes($title, '%_') . '%');
+        }
+
+        return $qb->getQuery()->getArrayResult();
     }
 
     //    /**

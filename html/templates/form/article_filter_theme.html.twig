@@ -1,0 +1,45 @@
+{% use 'form/catalyst_layout.html.twig' %}
+
+{%- block _article_filter_widget -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' flex items-center gap-4')|trim}) -%}
+    {{- block('form_widget') -}}
+{%- endblock -%}
+
+{%- block form_row_render -%}
+    <div class="w-full">
+        <span class="relative block w-full before:absolute before:inset-px before:rounded-[calc(var(--radius-lg)-1px)] before:bg-white before:shadow-sm dark:before:hidden after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-transparent after:ring-inset sm:focus-within:after:ring-2 sm:focus-within:after:ring-blue-500 has-data-disabled:opacity-50 has-data-disabled:before:bg-zinc-950/5 has-data-disabled:before:shadow-none">
+            {{- form_widget(form, widget_attr) -}}
+        </span>
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock form_row_render -%}
+
+{%- block form_label -%}
+    {% if label %}
+        {%- set label_attr = label_attr|merge({class: label_attr.class|default(label_class|default('block mb-1 text-base/7 font-semibold text-zinc-950 sm:text-sm/6 dark:text-white'))}) -%}
+        {{- parent() -}}
+    {% endif %}
+{%- endblock form_label -%}
+
+{%- block checkbox_row -%}
+    {%- set row_attr = row_attr|merge({class: row_attr.class|default(row_class|default('grid grid-cols-[1.125rem_1fr] gap-x-4 gap-y-1 sm:grid-cols-[1rem_1fr] *:data-[slot=control]:col-start-1 *:data-[slot=control]:row-start-1 *:data-[slot=control]:mt-0.75 sm:*:data-[slot=control]:mt-1 *:data-[slot=label]:col-start-2 *:data-[slot=label]:row-start-1 *:data-[slot=description]:col-start-2 *:data-[slot=description]:row-start-2 has-data-[slot=description]:**:data-[slot=label]:font-medium'))}) -%}
+    {%- set widget_attr = attr|merge({class: 'peer absolute inset-0 z-10 m-0 size-full cursor-pointer appearance-none opacity-0 disabled:cursor-default'}) -%}
+    {%- if help -%}
+        {%- set widget_attr = widget_attr|merge({'aria-describedby': id ~ '_help'}) -%}
+    {%- endif -%}
+    <div data-slot="field"{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        <span data-slot="control" class="group relative inline-flex focus:outline-hidden">
+            {{- form_widget(form, {attr: widget_attr}) -}}
+            <span aria-hidden="true" class="relative isolate flex size-4.5 items-center justify-center rounded-[0.3125rem] sm:size-4 before:absolute before:inset-0 before:-z-10 before:rounded-[calc(0.3125rem-1px)] before:bg-white before:shadow-sm group-has-checked:before:bg-(--checkbox-checked-bg) dark:before:hidden dark:bg-white/5 dark:group-has-checked:bg-(--checkbox-checked-bg) border border-zinc-950/15 group-has-checked:border-transparent group-hover:group-has-checked:border-transparent group-hover:border-zinc-950/30 group-has-checked:bg-(--checkbox-checked-border) dark:border-white/15 dark:group-has-checked:border-white/5 dark:group-hover:group-has-checked:border-white/5 dark:group-hover:border-white/30 after:absolute after:inset-0 after:rounded-[calc(0.3125rem-1px)] after:shadow-[inset_0_1px_--theme(--color-white/15%)] dark:after:-inset-px dark:after:hidden dark:after:rounded-[0.3125rem] dark:group-has-checked:after:block group-has-focus-visible:outline-2 group-has-focus-visible:outline-offset-2 group-has-focus-visible:outline-blue-500 group-has-disabled:opacity-50 group-has-disabled:border-zinc-950/25 group-has-disabled:bg-zinc-950/5 group-has-disabled:[--checkbox-check:var(--color-zinc-950)]/50 group-has-disabled:before:bg-transparent dark:group-has-disabled:border-white/20 dark:group-has-disabled:bg-white/2.5 dark:group-has-disabled:[--checkbox-check:var(--color-white)]/50 dark:group-has-checked:group-has-disabled:after:hidden forced-colors:[--checkbox-check:HighlightText] forced-colors:[--checkbox-checked-bg:Highlight] forced-colors:group-has-disabled:[--checkbox-check:Highlight] dark:forced-colors:[--checkbox-check:HighlightText] dark:forced-colors:[--checkbox-checked-bg:Highlight] dark:forced-colors:group-has-disabled:[--checkbox-check:Highlight] [--checkbox-check:var(--color-white)] [--checkbox-checked-bg:var(--color-zinc-900)] [--checkbox-checked-border:var(--color-zinc-950)]/90 dark:[--checkbox-checked-bg:var(--color-zinc-600)]">
+                <svg class="size-4 stroke-(--checkbox-check) opacity-0 group-has-checked:opacity-100 sm:h-3.5 sm:w-3.5" viewBox="0 0 14 14" fill="none">
+                    <path d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </span>
+        </span>
+        {{- form_label(form, null, {label_attr: label_attr|merge({'data-slot': 'label', class: label_attr.class|default('w-max text-base/6 text-zinc-950 select-none sm:text-sm/6 dark:text-white')})}) -}}
+        {%- if help -%}
+            <p data-slot="description" id="{{ id }}_help" class="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">{{ translation_domain is same as(false) ? help : help|trans(help_translation_parameters, translation_domain) }}</p>
+        {%- endif -%}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock checkbox_row -%}
