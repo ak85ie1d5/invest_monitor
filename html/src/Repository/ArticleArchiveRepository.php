@@ -65,7 +65,7 @@ class ArticleArchiveRepository extends ServiceEntityRepository
     public function findByFilters(?string $title, bool $showHidden = false): array
     {
         $qb = $this->createQueryBuilder('a')
-            ->select('a.title, a.publicationDate AS publication_date, a.link')
+            ->select('a.id, a.title, a.publicationDate AS publication_date, a.link, a.isVisible AS is_visible')
             ->orderBy('a.publicationDate', 'DESC');
 
         if (!$showHidden) {
