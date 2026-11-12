@@ -1,0 +1,39 @@
+{#
+    Catalyst switch, sans JavaScript.
+    Les classes data-checked / data-hover / data-focus / data-disabled de Catalyst (posées par Headless UI)
+    sont remplacées par has-checked / hover / has-focus-visible / has-disabled, qui lisent l'état de l'input.
+
+    Couleurs : chaque entrée vient de l'objet `colors` de switch.tsx dans le kit Catalyst.
+    [0] = couleur du fond quand le switch est actif, [1] = couleur du rond.
+#}
+{%- set colors = {
+    'dark/zinc': [
+        '[--switch-bg-ring:var(--color-zinc-950)]/90 [--switch-bg:var(--color-zinc-900)] dark:[--switch-bg-ring:transparent] dark:[--switch-bg:var(--color-white)]/25',
+        '[--switch-ring:var(--color-zinc-950)]/90 [--switch-shadow:var(--color-black)]/10 [--switch:white] dark:[--switch-ring:var(--color-zinc-700)]/90',
+    ],
+} -%}
+{%- set color_classes = colors[color] ?? colors['dark/zinc'] -%}
+
+{%- set control -%}
+    <span data-slot="control" class="group relative isolate inline-flex h-6 w-10 rounded-full p-[3px] sm:h-5 sm:w-8 transition duration-200 ease-in-out forced-colors:outline forced-colors:[--switch-bg:Highlight] dark:forced-colors:[--switch-bg:Highlight] bg-zinc-200 ring-1 ring-black/5 ring-inset dark:bg-white/5 dark:ring-white/15 has-checked:bg-(--switch-bg) has-checked:ring-(--switch-bg-ring) dark:has-checked:bg-(--switch-bg) dark:has-checked:ring-(--switch-bg-ring) has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-blue-500 hover:ring-black/15 hover:has-checked:ring-(--switch-bg-ring) dark:hover:ring-white/25 dark:hover:has-checked:ring-(--switch-bg-ring) has-disabled:bg-zinc-200 has-disabled:opacity-50 has-disabled:has-checked:bg-zinc-200 has-disabled:has-checked:ring-black/5 dark:has-disabled:bg-white/15 dark:has-disabled:has-checked:bg-white/15 dark:has-disabled:has-checked:ring-white/15 {{ color_classes[0] }}">
+        <input type="checkbox" role="switch" id="{{ id }}"
+               {%- if name %} name="{{ name }}"{% endif %} value="{{ value }}"
+               {%- if checked %} checked{% endif %}
+               {%- if disabled %} disabled{% endif %}
+               {%- if description %} aria-describedby="{{ id }}_description"{% endif %}
+               class="absolute inset-0 z-10 m-0 size-full cursor-pointer appearance-none rounded-full opacity-0 focus:outline-hidden disabled:cursor-default">
+        <span aria-hidden="true" class="pointer-events-none relative inline-block size-4.5 rounded-full sm:size-3.5 translate-x-0 transition duration-200 ease-in-out border border-transparent bg-white shadow-sm ring-1 ring-black/5 group-has-checked:bg-(--switch) group-has-checked:shadow-(--switch-shadow) group-has-checked:ring-(--switch-ring) group-has-checked:translate-x-4 sm:group-has-checked:translate-x-3 group-has-checked:group-has-disabled:bg-white group-has-checked:group-has-disabled:shadow-sm group-has-checked:group-has-disabled:ring-black/5 {{ color_classes[1] }}"></span>
+    </span>
+{%- endset -%}
+
+{%- if label -%}
+    <div data-slot="field"{{ attributes.defaults({class: 'grid grid-cols-[1fr_auto] gap-x-8 gap-y-1 sm:grid-cols-[1fr_auto] *:data-[slot=control]:col-start-2 *:data-[slot=control]:self-start sm:*:data-[slot=control]:mt-0.5 *:data-[slot=label]:col-start-1 *:data-[slot=label]:row-start-1 *:data-[slot=description]:col-start-1 *:data-[slot=description]:row-start-2 has-data-[slot=description]:**:data-[slot=label]:font-medium'}) }}>
+        <label data-slot="label" for="{{ id }}" class="text-base/6 text-zinc-950 select-none sm:text-sm/6 dark:text-white{{ disabled ? ' opacity-50' }}">{{ label }}</label>
+        {%- if description -%}
+            <p data-slot="description" id="{{ id }}_description" class="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400{{ disabled ? ' opacity-50' }}">{{ description }}</p>
+        {%- endif -%}
+        {{ control }}
+    </div>
+{%- else -%}
+    <span{{ attributes.defaults({class: 'inline-flex'}) }}>{{ control }}</span>
+{%- endif -%}

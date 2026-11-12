@@ -22,6 +22,7 @@
             <twig:Table:Row>
                 <twig:Table:Header>Titre</twig:Table:Header>
                 <twig:Table:Header>Date de publication</twig:Table:Header>
+                <twig:Table:Header>Show/Hide</twig:Table:Header>
                 <twig:Table:Header></twig:Table:Header>
             </twig:Table:Row>
         </twig:Table:Head>
@@ -30,6 +31,9 @@
                 <twig:Table:Row>
                     <twig:Table:Cell>{{ article.title }}</twig:Table:Cell>
                     <twig:Table:Cell>{{ article.publication_date|date("H:i m/d/Y") }}</twig:Table:Cell>
+                    <twig:Table:Cell>
+                        <twig:SwitchField  />
+                    </twig:Table:Cell>
                     <twig:Table:Cell>
                         <a href="{{ article.link }}" target="_blank">View</a>
                     </twig:Table:Cell>
