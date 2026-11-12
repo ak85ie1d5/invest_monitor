@@ -11,6 +11,8 @@
 {% endblock %}
 
 {% block body %}
+    {% form_theme articleFilterForm with ['form/article_filter_theme.html.twig'] %}
+
     {{ form_start(articleFilterForm) }}
         {{ form_widget(articleFilterForm) }}
     {{ form_end(articleFilterForm) }}

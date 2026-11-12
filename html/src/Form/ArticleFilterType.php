@@ -23,7 +23,7 @@ class ArticleFilterType extends AbstractType
             ])
             ->add('showHidden', CheckboxType::class, [
                 'required' => false,
-                'label' => 'Show hidden articles',
+                'label' => 'Show hidden articles'
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Filter',
